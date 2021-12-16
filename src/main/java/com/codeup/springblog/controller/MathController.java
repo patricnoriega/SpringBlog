@@ -15,10 +15,10 @@ public class MathController {
         return number + number2;
     }
 
-    @RequestMapping(path = "/subtract/{number}/and/{number2}", method = RequestMethod.GET)
+    @RequestMapping(path = "/subtract/{number}/by/{number2}", method = RequestMethod.GET)
     @ResponseBody
     public int subtract(@PathVariable int number, @PathVariable int number2){
-        return number - number2;
+        return number2 - number;
     }
 
     @RequestMapping(path = "/multiply/{number}/and/{number2}", method = RequestMethod.GET)
