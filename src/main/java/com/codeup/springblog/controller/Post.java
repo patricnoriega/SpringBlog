@@ -1,13 +1,19 @@
+import javax.persistence.*;
+
+@Entity
+@Table(name = "Post")
 public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false, length = 50)
     private String title;
+
+    @Column(nullable = false, length = 50)
     private String body;
 
-    public Post(int id, String title, String body) {
-        this.id = id;
-        this.title = title;
-        this.body = body;
-    }
 
     public int getId() {
         return id;
