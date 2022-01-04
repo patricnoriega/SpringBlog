@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Posts Index</title>
 </head>
 <body>
-<div th:each="post : ${viewposts}">
-    <p th:text="${post.name}" />
+<div th:each="post : ${posts}">
+    <p th:text="${post.getTitle}" />
+    <p th:text="${post.getBody}" />
 </div>
+
 </body>
 </html>

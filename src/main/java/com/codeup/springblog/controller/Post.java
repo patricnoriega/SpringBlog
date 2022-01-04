@@ -1,7 +1,9 @@
+package com.codeup.springblog.controller;
+
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Post")
+@Table(name = "Posts")
 public class Post {
 
     @Id

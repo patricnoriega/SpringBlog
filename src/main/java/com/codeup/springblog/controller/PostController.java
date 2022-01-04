@@ -1,15 +1,22 @@
 package com.codeup.springblog.controller;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class PostController {
+    private final PostRepository postDao;
 
-    @GetMapping(path = "/posts")
-    @ResponseBody
-    public String posts() {
-        return "posts index page";
+    public PostController(PostRepository postDao) {
+        this.postDao = postDao;
+    }
+
+    @GetMapping("/posts")
+    public String postIndex(Model model) {
+        model.addAttribute("posts", postDao.findAll());
+
+        return "posts/index";
     }
 
     @GetMapping(path = "/posts/{id}")
