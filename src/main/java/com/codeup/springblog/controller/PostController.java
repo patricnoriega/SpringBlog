@@ -19,10 +19,12 @@ public class PostController {
         return "posts/index";
     }
 
-    @GetMapping(path = "/posts/{id}")
-    @ResponseBody
-    public String postId(@PathVariable int id) {
-        return "view an individual post" + id;
+    @GetMapping("/posts/{id}")
+    public String showPage(@PathVariable long id, Model model){
+        Post post = postDao.getById(id);
+        model.addAttribute("post", post);
+
+        return "posts/show";
     }
 
 
