@@ -20,7 +20,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public String showPage(@PathVariable long id, Model model){
+    public String showPage(@PathVariable long id, Model model) {
         Post post = postDao.getById(id);
         model.addAttribute("post", post);
 
@@ -29,17 +29,40 @@ public class PostController {
 
 
     @GetMapping(path = "/posts/create")
-    @ResponseBody
-    public String postForm() {
-        return "view the form for creating a post";
+    public String postForm(Model viewModel) {
+        viewModel.addAttribute("post", new Post());
+
+        return "posts/create";
     }
 
     @PostMapping(path = "/posts/create")
-    @ResponseBody
-    public String createPost() {
-        return "create a new post";
+    public String createPost(@ModelAttribute Post postToBeSaved) {
+        Post createdPost = postDao.save(postToBeSaved);
+
+        return "redirect:/posts/" + createdPost.getId();
     }
 
+
+    @GetMapping("/posts/{id}/edit")
+    public String viewEditForm(@PathVariable long id, Model viewModel) {
+        viewModel.addAttribute("post", postDao.getById(id));
+
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/{id}/edit")
+    public String editPost(@ModelAttribute Post postToBeUpdated) {
+        postDao.save(postToBeUpdated);
+
+        return "redirect:/posts";
+    }
+
+    @PostMapping("/posts/{id}/delete")
+    public String deletePost(@PathVariable long id) {
+        postDao.deleteById(id);
+
+        return "redirect:/posts";
+    }
 
 }
 
