@@ -7,9 +7,11 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class PostController {
     private final PostRepository postDao;
+    private final UserRepository userDao;
 
-    public PostController(PostRepository postDao) {
+    public PostController(PostRepository postDao, UserRepository userDao) {
         this.postDao = postDao;
+        this.userDao = userDao;
     }
 
     @GetMapping("/posts")
@@ -20,7 +22,7 @@ public class PostController {
     }
 
     @GetMapping("/posts/{id}")
-    public String showPage(@PathVariable long id, Model model){
+    public String showPage(@PathVariable long id, Model model) {
         Post post = postDao.getById(id);
         model.addAttribute("post", post);
 
@@ -29,17 +31,48 @@ public class PostController {
 
 
     @GetMapping(path = "/posts/create")
-    @ResponseBody
-    public String postForm() {
-        return "view the form for creating a post";
+    public String postForm(Model viewModel) {
+        viewModel.addAttribute("post", new Post());
+
+        return "posts/create";
     }
 
     @PostMapping(path = "/posts/create")
-    @ResponseBody
-    public String createPost() {
-        return "create a new post";
+    public String createPost(@ModelAttribute Post postToBeSaved, long id) {
+        User user = userDao.getById(id);
+        postToBeSaved.setUser(user);
+        Post createdPost = postDao.save(postToBeSaved);
+
+        return "redirect:/posts/" + createdPost;
     }
 
+
+    @GetMapping("/posts/edit/{id}")
+    public String viewEditForm(@PathVariable long id, Model model) {
+        Post editPost = postDao.getById(id);
+
+        model.addAttribute("postToEdit", editPost);
+        return "posts/edit";
+    }
+
+    @PostMapping("/posts/edit/{id}")
+        public String saveEditPost(@RequestParam(name="postTitle") String postTitle, @RequestParam(name="postBody") String postBody, @RequestParam(name="postId") long id){
+
+
+            Post postToEdit = postDao.getById(id);
+            postToEdit.setBody(postBody);
+            postToEdit.setTitle(postTitle);
+            postDao.save(postToEdit);
+
+            return "redirect:/posts";
+        }
+
+    @PostMapping("/posts/delete/{id}")
+    public String deletePost(@PathVariable long id) {
+        postDao.deleteById(id);
+
+        return "redirect:/posts";
+    }
 
 }
 

@@ -8,6 +8,16 @@
 <div th:each="post : ${posts}">
     <h2 th:text="${post.getTitle}" />
     <p th:text="${post.getBody}" />
+
+<form th:action="'/posts/edit/' + ${post.getId()}" method="get">
+    <button>Edit</button>
+</form>
+
+<form th:action="'/posts/delete/' + ${post.getId()}" method="post">
+
+    <button>Delete</button>
+</form>
+<br>
 </div>
 
 </body>
