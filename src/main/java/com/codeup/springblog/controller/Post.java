@@ -16,6 +16,17 @@ public class Post {
     @Column(nullable = false, length = 50)
     private String body;
 
+    @OneToOne
+    private User owner;
+
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
 
     public Long getId() {
         return id;
