@@ -9,6 +9,7 @@
     <div class="card">
         <h2 th:text="${post.title}"></h2>
         <p th:text="${post.body}"></p>
+        <p>Posted by: <span th:text:="${user}"></span></p>
     </div>
 </main>
 </body>
