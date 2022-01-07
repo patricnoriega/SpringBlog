@@ -31,25 +31,19 @@ public class PostController {
 
 
     @GetMapping("/posts/create")
-    public String postForm(Model viewModel) {
-        viewModel.addAttribute("post", new Post());
+    public String postForm(Model model) {
+        model.addAttribute("post", new Post());
 
         return "posts/create";
     }
 
     @PostMapping("/posts/create")
-    public String createPost(@RequestParam(name = "title") String title, @RequestParam(name = "body") String body) {
+    public String createPost(@ModelAttribute Post post) {
 
-        Post postToBeSaved = new Post();
-        postToBeSaved.setBody(body);
-        postToBeSaved.setTitle(title);
-        postDao.save(postToBeSaved);
+        post.setUser(userDao.getById(1L));
+        postDao.save(post);
 
-        System.out.println("postToBeSaved.getBody() = " + postToBeSaved.getBody());
-        System.out.println("postToBeSaved.getTitle() = " + postToBeSaved.getTitle());
-        System.out.println("postToBeSaved.getUser() = " + postToBeSaved.getUser());
-
-        return "redirect:/posts/";
+        return "redirect:/posts";
     }
 
 

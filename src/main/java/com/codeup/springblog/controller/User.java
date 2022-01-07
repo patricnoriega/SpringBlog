@@ -20,14 +20,14 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user")
-    private List<Post> posts;
+    private List<Post> userPosts;
 
-    public List<Post> getPosts() {
-        return posts;
+    public List<Post> getUserPosts() {
+        return userPosts;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public void setUserPosts(List<Post> userPosts) {
+        this.userPosts = userPosts;
     }
 
     public User() {
