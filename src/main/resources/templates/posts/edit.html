@@ -5,12 +5,12 @@
     <title>Edit</title>
 </head>
 <body>
-<form th:action="${'/posts/edit'}" method="post">
-    <label name="postTitle">Title of Post:</label>
-    <input name="postTitle" th:value="${postToEdit.getTitle()}">
+<form th:action="@{/posts/edit}" method="post" th:object="${postToEdit}">
+    <label for="postTitle">Title of Post:</label>
+    <input name="postTitle" type="text" th:field="*{title}" id="postTitle">
 
-    <label name="postBody">Body of Post:</label>
-    <input name="postBody" th:value="${postToEdit.getBody()}">
+    <label for="postBody">Body of Post:</label>
+    <input name="postBody" type="text" th:field="*{body}" id="postBody">
 
     <input name="postId" type="hidden" th:value="${postToEdit.getId()}">
 

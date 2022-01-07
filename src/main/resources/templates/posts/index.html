@@ -8,7 +8,7 @@
 
 <div th:each="post : ${posts}">
     <h3 th:text="${post.getTitle()}"></h3>
-    Posted by: <span th:text="${post.getUser().getEmail()}"></span>
+    Posted by: <span th:text="${post.getUser().getUsername()}"></span>
     <br>
     <p th:text="${post.getBody()}"></p>
 

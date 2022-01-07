@@ -48,28 +48,22 @@ public class PostController {
 
 
     @GetMapping("/posts/edit/{id}")
-    public String viewEditForm(@PathVariable long id, Model model) {
-        Post editPost = postDao.getById(id);
-        model.addAttribute("postToEdit", editPost);
+    public String editForm(@PathVariable long id, Model model) {
+        model.addAttribute("postToEdit", postDao.getById(1L));
 
         return "posts/edit";
     }
 
     @PostMapping("/posts/edit/{id}")
-    public String saveEditPost(@RequestParam(name = "postTitle") String postTitle, @RequestParam(name = "postBody") String postBody, @RequestParam(name = "postId") long id) {
+    public String saveEditPost(@ModelAttribute Post postToEdit) {
 
-        Post postToEdit = postDao.getById(id);
-//            postToEdit.setBody(postBody);
-//            postToEdit.setTitle(postTitle);
-//            postDao.save(postToEdit);
+//        Post postToEdit = postDao.getById(id);
+//        postToEdit.setBody(postBody);
+//        postToEdit.setTitle(postTitle);
+//        postDao.save(postToEdit);
 
-        postToEdit.setBody(postBody);
-        postToEdit.setTitle(postTitle);
+        postToEdit.setUser(userDao.getById(1L));
         postDao.save(postToEdit);
-
-        System.out.println("postToEdit.getBody() = " + postToEdit.getBody());
-        System.out.println("postToEdit.getTitle() = " + postToEdit.getTitle());
-        System.out.println("postToEdit.getUser() = " + postToEdit.getUser());
 
         return "redirect:/posts";
     }
