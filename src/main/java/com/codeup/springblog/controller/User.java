@@ -19,8 +19,8 @@ public class User {
     @Column(nullable = false, length = 240)
     private String password;
 
-  @OneToMany(mappedBy = "user")
-  private List<Post> posts;
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
 
     public List<Post> getPosts() {
         return posts;
@@ -30,13 +30,16 @@ public class User {
         this.posts = posts;
     }
 
+    public User() {
+
+    }
+
     public User(Long id, String username, String email, String password) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;
     }
-
 
 
     public Long getId() {

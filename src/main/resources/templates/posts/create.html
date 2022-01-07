@@ -7,13 +7,15 @@
 <body>
 <main class="container">
 
-  <form th:action="@{/posts/create}" th:method="post" th:object="${post}">
+  <form th:action="${'/posts/create'}" th:method="post" th:object="${postToBeSaved}">
     Title:
-    <input th:field="*{title}">
+    <input th:text="${title}" name="title" id="title">
     <hr>
     Body:
-    <input th:field="*{body}"/>
+    <input th:text="${body}" name="body" id="body"/>
     <hr>
+<!--    <input name="postId" type="hidden" th:value="${post.getId()}">-->
+
     <input type="submit"/>
   </form>
 
