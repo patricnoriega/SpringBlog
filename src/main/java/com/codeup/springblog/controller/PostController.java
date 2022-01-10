@@ -1,5 +1,9 @@
 package com.codeup.springblog.controller;
 
+import com.codeup.springblog.Models.Post;
+import com.codeup.springblog.Repository.PostRepository;
+import com.codeup.springblog.Repository.UserRepository;
+import com.codeup.springblog.emailService.EmailService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -8,10 +12,12 @@ import org.springframework.web.bind.annotation.*;
 public class PostController {
     private final PostRepository postDao;
     private final UserRepository userDao;
+    private final EmailService emailService;
 
-    public PostController(PostRepository postDao, UserRepository userDao) {
+    public PostController(PostRepository postDao, UserRepository userDao, EmailService emailService) {
         this.postDao = postDao;
         this.userDao = userDao;
+        this.emailService = emailService;
     }
 
     @GetMapping("/posts")
@@ -41,7 +47,13 @@ public class PostController {
     public String createPost(@ModelAttribute Post post) {
 
         post.setUser(userDao.getById(1L));
+        String emailSubject = post.getUser().getUsername() + ", Your post has been created";
+
+        String emailBody = "Congratulations - Your latest blog post is up and ready to view on you blogging website. Your post read:" + post.getBody();
+
         postDao.save(post);
+        emailService.prepareAndSend(post, emailSubject, emailBody);
+
 
         return "redirect:/posts";
     }
@@ -56,11 +68,6 @@ public class PostController {
 
     @PostMapping("/posts/edit/{id}")
     public String saveEditPost(@ModelAttribute Post postToEdit) {
-
-//        Post postToEdit = postDao.getById(id);
-//        postToEdit.setBody(postBody);
-//        postToEdit.setTitle(postTitle);
-//        postDao.save(postToEdit);
 
         postToEdit.setUser(userDao.getById(1L));
         postDao.save(postToEdit);
