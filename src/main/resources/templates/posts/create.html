@@ -1,23 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-<main class="container">
 
   <form th:action="@{/posts/create}" th:method="post" th:object="${post}">
-    Title:
-    <input th:field="*{title}">
+
+    <label for="title">Title:</label>
+    <input type="text" th:field="*{title}" id="title">
     <hr>
-    Body:
-    <input th:field="*{body}"/>
+
+    <label for="body">Body:</label>
+    <input type="text" th:field="*{body}" id="body"/>
     <hr>
+<!--    <input name="postId" type="hidden" th:value="${post.getId()}">-->
+
     <input type="submit"/>
   </form>
-
-</main>
 
 </body>
 </html>

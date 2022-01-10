@@ -19,15 +19,19 @@ public class User {
     @Column(nullable = false, length = 240)
     private String password;
 
-  @OneToMany(mappedBy = "user")
-  private List<Post> posts;
+    @OneToMany(mappedBy = "user")
+    private List<Post> userPosts;
 
-    public List<Post> getPosts() {
-        return posts;
+    public List<Post> getUserPosts() {
+        return userPosts;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public void setUserPosts(List<Post> userPosts) {
+        this.userPosts = userPosts;
+    }
+
+    public User() {
+
     }
 
     public User(Long id, String username, String email, String password) {
@@ -36,7 +40,6 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
 
 
     public Long getId() {

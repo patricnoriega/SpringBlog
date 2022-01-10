@@ -30,42 +30,43 @@ public class PostController {
     }
 
 
-    @GetMapping(path = "/posts/create")
-    public String postForm(Model viewModel) {
-        viewModel.addAttribute("post", new Post());
+    @GetMapping("/posts/create")
+    public String postForm(Model model) {
+        model.addAttribute("post", new Post());
 
         return "posts/create";
     }
 
-    @PostMapping(path = "/posts/create")
-    public String createPost(@ModelAttribute Post postToBeSaved, long id) {
-        User user = userDao.getById(id);
-        postToBeSaved.setUser(user);
-        Post createdPost = postDao.save(postToBeSaved);
+    @PostMapping("/posts/create")
+    public String createPost(@ModelAttribute Post post) {
 
-        return "redirect:/posts/" + createdPost;
+        post.setUser(userDao.getById(1L));
+        postDao.save(post);
+
+        return "redirect:/posts";
     }
 
 
     @GetMapping("/posts/edit/{id}")
-    public String viewEditForm(@PathVariable long id, Model model) {
-        Post editPost = postDao.getById(id);
+    public String editForm(@PathVariable long id, Model model) {
+        model.addAttribute("postToEdit", postDao.getById(1L));
 
-        model.addAttribute("postToEdit", editPost);
         return "posts/edit";
     }
 
     @PostMapping("/posts/edit/{id}")
-        public String saveEditPost(@RequestParam(name="postTitle") String postTitle, @RequestParam(name="postBody") String postBody, @RequestParam(name="postId") long id){
+    public String saveEditPost(@ModelAttribute Post postToEdit) {
 
+//        Post postToEdit = postDao.getById(id);
+//        postToEdit.setBody(postBody);
+//        postToEdit.setTitle(postTitle);
+//        postDao.save(postToEdit);
 
-            Post postToEdit = postDao.getById(id);
-            postToEdit.setBody(postBody);
-            postToEdit.setTitle(postTitle);
-            postDao.save(postToEdit);
+        postToEdit.setUser(userDao.getById(1L));
+        postDao.save(postToEdit);
 
-            return "redirect:/posts";
-        }
+        return "redirect:/posts";
+    }
 
     @PostMapping("/posts/delete/{id}")
     public String deletePost(@PathVariable long id) {
