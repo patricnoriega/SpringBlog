@@ -1,7 +1,8 @@
-package com.codeup.springblog.controller;
+package Models;
+
+import Models.User;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "Posts")
