@@ -1,4 +1,4 @@
-package com.codeup.springblog.emailService;
+package com.codeup.springblog.Services;
 
 import com.codeup.springblog.Models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
