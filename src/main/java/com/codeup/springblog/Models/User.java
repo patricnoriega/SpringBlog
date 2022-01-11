@@ -1,4 +1,4 @@
-package com.codeup.springblog.controller;
+package com.codeup.springblog.Models;
 
 import javax.persistence.*;
 import java.util.List;
@@ -30,8 +30,12 @@ public class User {
         this.userPosts = userPosts;
     }
 
-    public User() {
-
+//  Spring security constructor
+    public User(User copy) {
+        id = copy.id; // This line is SUPER important! Many things won't work if it's absent
+        email = copy.email;
+        username = copy.username;
+        password = copy.password;
     }
 
     public User(Long id, String username, String email, String password) {
@@ -40,7 +44,8 @@ public class User {
         this.email = email;
         this.password = password;
     }
-
+//  default constructor
+    public User() {}
 
     public Long getId() {
         return id;
